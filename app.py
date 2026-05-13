@@ -16,9 +16,24 @@ st.set_page_config(
 # =========================
 # LOAD MODEL
 # =========================
-model = pickle.load(open("model.pkl", "rb"))
-r2_score = pickle.load(open("r2_score.pkl", "rb"))
+import os
+import pickle
+import streamlit as st
 
+# Check required files
+required_files = ["model.pkl", "r2_score.pkl"]
+
+for file in required_files:
+    if not os.path.exists(file):
+        st.error(f"{file} not found. Please upload it to your GitHub repository.")
+        st.stop()
+
+# Load files
+with open("model.pkl", "rb") as f:
+    model = pickle.load(f)
+
+with open("r2_score.pkl", "rb") as f:
+    r2_score = pickle.load(f)
 # =========================
 # DARK UI CSS
 # =========================
